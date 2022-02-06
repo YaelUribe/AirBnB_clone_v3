@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """
-Module: Cities
+Module: Amenities
 """
-from AirBnB_clone_v3.models import amenity
 from api.v1.views import app_views
 from flask import jsonify, make_response, request, abort
 from models.amenity import Amenity
@@ -12,7 +11,7 @@ from models import storage
 @app_views.route('/amenities', strict_slashes=False)
 def all_amenities():
     """Returning all available amenities"""
-    amenities = storage.all('Amenity')  # retrieving info from Amenity
+    amenities = storage.all('Amenity').values()  # retrieving info from Amenity
     all_amenity = []
     for i in amenities:  # parsing info
         all_amenity.append(i.to_dict())  # storing in a new list as dict
