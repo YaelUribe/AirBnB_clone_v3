@@ -11,14 +11,14 @@ from models import storage
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
 def all_places(city_id):
     """Returning all available places"""
-    city = storage.get('City', city_id)  # retrieving info from User
+    city = storage.get('City', city_id)  # retrieving info from city
     if city is None:  # validating id presence
         abort(404)
     places = [i.to_dict() for i in city.places]
     return jsonify(places)  # returning json with places info
 
 
-@app_views.route('/places/<place_id>>', strict_slashes=False)
+@app_views.route('/places/<place_id>', strict_slashes=False)
 def places_list(place_id):
     """Retrieving a Place by given id"""
     objct = storage.get('Place', place_id)  # storing our object
