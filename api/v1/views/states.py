@@ -56,7 +56,7 @@ def post_states():
     new_state = State(**state)  # create a new instance with incoming data
     storage.new(new_state)  # create new state
     storage.save()  # save info in dict
-    return make_response(jsonify(new_state), 201)
+    return make_response(jsonify(new_state.to_dict()), 201)
     # Return the new State with the status code 201
 
 
@@ -73,4 +73,4 @@ def state_update(state_id):
     for key, value in state_update:  # setting attributes Name & value to objct
         setattr(objct, key, value)
     storage.save()
-    return make_response(jsonify(objct), 200)
+    return make_response(jsonify(objct.to_dict()), 200)
