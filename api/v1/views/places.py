@@ -74,8 +74,8 @@ def post_places(city_id):
 @app_views.route('/users/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
 def places_update(place_id):
-    """Updating an Amenity object by given id"""
-    objct = storage.get('Place', place_id)  # store Amenity by given id
+    """Updating a Place object by given id"""
+    objct = storage.get('Place', place_id)  # store place by given id
     if objct is None:  # check if it is valid
         abort(404)
     if not request.json:  # verify if there's a request.json
@@ -83,6 +83,8 @@ def places_update(place_id):
     place_update = request.json
     for key, value in place_update.items():
         # setting attributes Name & value to objct
+        if key == 'user_id' or key == 'city_id':
+            continue
         setattr(objct, key, value)
     storage.save()
     return make_response(jsonify(objct.to_dict()), 200)
