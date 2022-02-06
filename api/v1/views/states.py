@@ -46,7 +46,7 @@ def delete_state(state_id):
                  strict_slashes=False)
 def post_states():
     """Post new information to States"""
-    if not request.get_json:  # verify if there's a request.json
+    if not request.json:  # verify if there's a request.json
         abort(400, 'Not a JSON')  # otherwise return error 400
     state = request.json  # store given JSON
     if 'name' not in state.keys():  # verify name key availability

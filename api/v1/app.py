@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """Status of api"""
-from logging import error
 from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from models import storage

@@ -46,7 +46,7 @@ def delete_city(city_id):
                  strict_slashes=False)
 def post_cities(state_id):
     """Post new information to city in a given State"""
-    if not request.get_json:  # verify if there's a request.json
+    if not request.json:  # verify if there's a request.json
         abort(400, 'Not a JSON')  # otherwise return error 400
     objct = request.json  # store given JSON
     if 'name' not in objct.keys():  # verify name key availability
@@ -54,7 +54,7 @@ def post_cities(state_id):
     state = storage.get('State', state_id)  # Getting State info
     if state is None:
         abort(404)
-    objct[state] = state_id  # assign state Id to new city
+    objct['state_id'] = state_id  # assign state Id to new city
     new_city = City(**objct)
     storage.new(new_city)  # create new state
     storage.save()  # save info in dict
