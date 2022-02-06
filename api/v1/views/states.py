@@ -10,6 +10,7 @@ from models.state import State
 from models import storage
 
 
+
 @app_views.route('/states', strict_slashes=False)
 def all_states():
     """Returning all states"""
@@ -50,7 +51,7 @@ def post_states():
     """Post new information to States"""
     if not request.get_json:  # verify if there's a request.json
         abort(400, 'Not a JSON')  # otherwise return error 400
-    state = request.get_json  # store given JSON
+    state = request.json  # store given JSON
     if 'name' not in state.keys():  # verify name key availability
         abort(400, 'Missing name')
     new_state = State(**state)  # create a new instance with incoming data
@@ -67,9 +68,9 @@ def state_update(state_id):
     objct = storage.get('State', state_id)  # store State by given id
     if objct is None:  # check if it is valid
         abort(404)
-    if not request.get_json:  # verify if there's a request.json
+    if not request.json:  # verify if there's a request.json
         abort(400, 'Not a JSON')  # otherwise return error 400
-    state_update = request.get_json
+    state_update = request.json
     for key, value in state_update:  # setting attributes Name & value to objct
         setattr(objct, key, value)
     storage.save()
