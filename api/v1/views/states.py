@@ -70,7 +70,8 @@ def state_update(state_id):
     if not request.json:  # verify if there's a request.json
         abort(400, 'Not a JSON')  # otherwise return error 400
     state_update = request.json
-    for key, value in state_update.items():  # setting attributes Name & value to objct
+    for key, value in state_update.items():
+        # setting attributes Name & value to objct
         setattr(objct, key, value)
     storage.save()
     return make_response(jsonify(objct.to_dict()), 200)
