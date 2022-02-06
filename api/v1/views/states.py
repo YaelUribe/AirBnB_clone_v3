@@ -5,7 +5,7 @@ Module: states
 from crypt import methods
 from os import abort
 from api.v1.views import app_views
-from flask import jsonify, make_response, request
+from flask import jsonify, make_response, request, abort
 from models.state import State
 from models import storage
 
@@ -65,7 +65,7 @@ def post_states():
 def state_update(state_id):
     """Updating a State object by given id"""
     objct = storage.get('State', state_id)  # store State by given id
-    if objct in None:  # check if it is valid
+    if objct is None:  # check if it is valid
         abort(404)
     if not request.get_json:  # verify if there's a request.json
         abort(400, 'Not a JSON')  # otherwise return error 400
