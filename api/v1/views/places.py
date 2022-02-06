@@ -58,7 +58,7 @@ def post_places(city_id):
 
     user = storage.get('User', objct['user_id'])  # check user by id
     if user is None:
-        abort(400)
+        abort(404)
 
     if 'name' not in objct.keys():  # check name key availability
         abort(400, "Missing name")
