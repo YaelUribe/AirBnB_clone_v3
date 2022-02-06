@@ -2,8 +2,6 @@
 """
 Module: states
 """
-from crypt import methods
-from os import abort
 from api.v1.views import app_views
 from flask import jsonify, make_response, request, abort
 from models.state import State
