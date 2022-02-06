@@ -10,7 +10,6 @@ from models.state import State
 from models import storage
 
 
-
 @app_views.route('/states', strict_slashes=False)
 def all_states():
     """Returning all states"""
