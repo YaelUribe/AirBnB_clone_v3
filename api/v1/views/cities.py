@@ -14,8 +14,7 @@ def all_cities(state_id):
     state = storage.get('State', state_id)  # retrieving info of state
     if state is None:  # verify presence of State by given id
         abort(404)
-    for i in state.cities:  # parsing State
-        cities = [i.to_dict()]  # storing in a new list
+    cities = [i.to_dict() for i in state.cities]  # storing in a new list
     return jsonify(cities)  # returning json with states info
 
 
