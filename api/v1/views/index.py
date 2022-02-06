@@ -23,12 +23,12 @@ def status():
 def count():
     """"""
     dict_class = {
-        'amenity': Amenity,
-        'city': City,
-        'place': Place,
-        'review': Review,
-        'state': State,
-        'user': User
+        'amenities': Amenity,
+        'cities': City,
+        'places': Place,
+        'reviews': Review,
+        'states': State,
+        'users': User
     }
 
     new_dict = {key: storage.count(value) for key, value in dict_class.items()}
