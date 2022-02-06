@@ -54,35 +54,35 @@ def post_places(city_id):
         abort(404)
 
     objct = request.json  # store given JSON
-    if 'user_id' not in objct.keys():  # verify email key availability
+    if 'user_id' not in objct.keys():  # verify user id in keys
         abort(400, 'Missing user_id')
 
-    user = storage.get('User', objct['user_id'])
+    user = storage.get('User', objct['user_id'])  # check user by id
     if user is None:
         abort(400)
 
-    if 'name' not in objct.keys():
+    if 'name' not in objct.keys():  # check name key availability
         abort(400, "Missing name")
 
     objct['city_id'] = city_id
     new_place = Place(**objct)
-    storage.new(new_place)  # create new user
+    storage.new(new_place)  # create new place
     storage.save()  # save info in dict
     return make_response(jsonify(new_place.to_dict()), 201)
-    # Return the new State with the status code 201
+    # Return the new User with the status code 201
 
 
-@app_views.route('/users/<user_id>', methods=['PUT'],
+@app_views.route('/users/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
-def users_update(user_id):
+def places_update(place_id):
     """Updating an Amenity object by given id"""
-    objct = storage.get('User', user_id)  # store Amenity by given id
+    objct = storage.get('Place', place_id)  # store Amenity by given id
     if objct is None:  # check if it is valid
         abort(404)
     if not request.json:  # verify if there's a request.json
         abort(400, "Not a JSON")  # otherwise return error 400
-    user_update = request.json
-    for key, value in user_update.items():
+    place_update = request.json
+    for key, value in place_update.items():
         # setting attributes Name & value to objct
         setattr(objct, key, value)
     storage.save()
