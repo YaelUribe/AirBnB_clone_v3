@@ -2,7 +2,6 @@
 """
 Module: places
 """
-from AirBnB_clone_v3.api.v1.views import cities
 from api.v1.views import app_views
 from flask import jsonify, make_response, request, abort
 from models.place import Place
