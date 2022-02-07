@@ -20,8 +20,7 @@ def get_review_by_place(place_id):
     if not place:
         abort(404)
     reviews = place.reviews()
-    # TODO: Create a empty list for enter all reviews but, each one at the time. Crear lista vacía y luego for review en reviews. Y a cada review
-    # se le hace .to_dict. For review in reviews.my_list.append(review.to_dict())
+    [i.to_dict() for i in place.reviews]
     return jsonify(reviews)
 
 
@@ -71,6 +70,11 @@ def create_review(place_id):
         abort(400, 'Missing user_id')
 
     user = storage.get('User', review.user_id)
-    
+
     if 'user_id' not in user:
         abort(400)
+
+    if 'text' not in review_json.keys():
+        abort(400, 'Missing text')
+
+    return
