@@ -58,7 +58,7 @@ def post_places(city_id):
 
     user = storage.get('User', objct['user_id'])
     if user is None:
-        abort(400)
+        abort(404)
 
     if 'name' not in objct.keys():
         abort(400, "Missing name")
@@ -71,18 +71,20 @@ def post_places(city_id):
     # Return the new State with the status code 201
 
 
-@app_views.route('/users/<user_id>', methods=['PUT'],
+@app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
-def users_update(user_id):
+def place_update(place_id):
     """Updating an Amenity object by given id"""
-    objct = storage.get('User', user_id)  # store Amenity by given id
-    if objct is None:  # check if it is valid
-        abort(404)
     if not request.json:  # verify if there's a request.json
         abort(400, "Not a JSON")  # otherwise return error 400
+    objct = storage.get('Place', place_id)  # store Amenity by given id
+    if objct is None:  # check if it is valid
+        abort(404)
     user_update = request.json
     for key, value in user_update.items():
         # setting attributes Name & value to objct
+        if key == 'user_id' or key == 'city_id':
+            continue
         setattr(objct, key, value)
     storage.save()
     return make_response(jsonify(objct.to_dict()), 200)
