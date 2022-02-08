@@ -3,9 +3,9 @@
 Module: Review
 """
 from api.v1.views import app_views
+from flask import jsonify, abort, make_response, request
 from models.review import Review
 from models import storage
-from flask import jsonify, abort, make_response, request
 
 
 @app_views.route(
@@ -31,9 +31,9 @@ def get_review_by_place(place_id):
 def get_review_by_id(review_id):
     """Retrieving a Review by id"""
     review = storage.get('Review', review_id)  # Retrieving info from review
-    if not review:  # Verify it exists
+    if review is None:  # Verify it exists
         abort(404)  # If not exists error 404
-    return jsonify(review)  # Return json with reviews info
+    return jsonify(review.to_dict())  # Return json with reviews info
 
 
 @app_views.route(
@@ -44,7 +44,7 @@ def get_review_by_id(review_id):
 def delete_review(review_id):
     """Delete a review by given id"""
     review = storage.get('Review', review_id)  # Retrieving info from review
-    if not review:  # Verify it exists
+    if review is None:  # Verify it exists
         abort(404)  # If not exists error 404
     storage.delete(review)  # Delete info from review
     storage.save()  # Update Dictionary
