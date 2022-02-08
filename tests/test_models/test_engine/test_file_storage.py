@@ -132,4 +132,3 @@ class TestFileStorage(unittest.TestCase):
         storage.new(place)
         storage.save()
         self.assertNotEqual(storage.count(), len(storage.all()))
-
