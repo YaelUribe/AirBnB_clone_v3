@@ -87,24 +87,26 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get(self):
-        """Testing get method"""
-        storage = DBStorage()
-        place = State(name="New Jersey")
-        storage.new(place)
+    def test_get_db(self):
+        """ Tests method for get() method"""
+        storage = DBStorage
+        dic = {"name": "Arizona"}
+        instance = State(**dic)
+        storage.new(instance)
         storage.save()
-        place_id = place.id
-        self.assertTrue(storage.get(State, place_id) == place)
-        place2 = State(name="Arizona")
-        storage.new(place2)
-        storage.save()
-        place_id2 = "null"
-        self.assertFalse(storage.get(State, place_id2))
+        get_instance = storage.get(State, instance.id)
+        self.assertEqual(get_instance, instance)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
-        """Test for count method"""
-        objct = models.storage.all()
-        counter = objct.count()
-        self.assertEqual(objct.count(), counter)
+        """ Tests count() method"""
+        storage = DBStorage
+        dic = {"name": "California"}
+        state = State(**dic)
+        storage.new(state)
+        dic = {"name": "Pennsilvania", "state_id": state.id}
+        city = City(**dic)
+        storage.new(city)
+        storage.save()
+        c = storage.count()
+        self.assertEqual(len(storage.all()), c)
+
